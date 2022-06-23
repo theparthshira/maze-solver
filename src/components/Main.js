@@ -372,7 +372,7 @@ export default function Main() {
       setWlls(false);
     }
 
-    // console.log(mp);
+    console.log(mp);
 
     function upped() {
         setDown(false)
