@@ -39,7 +39,7 @@ function dijkstra(grid,starti,startj) {
 
             if(grid[x][y] === -1) {
                 console.log(cnt)
-                console.log("reached")
+                // console.log("reached")
                 return cnt
             }
 
@@ -49,7 +49,7 @@ function dijkstra(grid,starti,startj) {
                 var tmp=x-1
                 if(vis[tmp][y] === false && grid[tmp][y] != 999) {
                     q.push([tmp,y])
-                    console.log(tmp + " " + y);
+                    // console.log(tmp + " " + y);
 
                     vis[tmp][y]=true;
 
@@ -67,7 +67,7 @@ function dijkstra(grid,starti,startj) {
                 var tmp=x+1
                 if(vis[tmp][y] === false && grid[tmp][y] != 999) {
                     q.push([tmp,y])
-                    console.log(tmp + " " + y);
+                    // console.log(tmp + " " + y);
                     vis[tmp][y]=true;
 
                     var n1=tmp.toString()
@@ -84,7 +84,7 @@ function dijkstra(grid,starti,startj) {
                 var tmp=y-1
                 if(vis[x][tmp] === false && grid[x][tmp] != 999) {
                     q.push([x,tmp])
-                    console.log(x + " " + tmp);
+                    // console.log(x + " " + tmp);
                     vis[x][tmp]=true;
 
                     var n1=tmp.toString()
@@ -101,7 +101,7 @@ function dijkstra(grid,starti,startj) {
                 var tmp=y+1
                 if(vis[x][tmp] === false && grid[x][tmp] != 999) {
                     q.push([x,tmp])
-                    console.log(x + " " + tmp);
+                    // console.log(x + " " + tmp);
                     vis[x][tmp]=true;
 
                     var n1=tmp.toString()
@@ -118,32 +118,33 @@ function dijkstra(grid,starti,startj) {
         cnt++;
     }
 
-    return cnt;
+    return -1;
 }
 
 export default function Main() {
-    const [points,setPoints] = React.useState({start:[-1,-1], end:[-1,-1]})
-    const [ch1,setCh1] = React.useState(false)
-    const [ch2,setCh2] = React.useState(false)
-    const [down,setDown] = React.useState(false)
-    const [wlls,setWlls] = React.useState(false)
-    const [grid,setGrid] = React.useState([
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    ])
+    let random = [
+        [999,999,999,0,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,0,999,999,999,999,999,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 999, 0, 0, 0 ], [ 999, 0, 999, 0, 999, 0, 0, 0, 0, 0, 0, 0, 999, 999, 999, 999,
+        999, 999, 999, 999, 0, 0, 0, 999, 999, 0, 0, 0, 0, 999, 999, 999, 999, 999, 0, 0, 0, 999, 999, 999 ], [ 999, 0, 999, 0,
+        999, 0, 0, -1, 0, 0, 999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 999, 0, 0, 0, 999, 999, 0, 0, 0, 999,
+        999, 0, 0, 0, 0, 0 ], [ 999, 0, 999, 0, 999, 999, 999, 999, 999, 999, 0, 999, 999, 999, 999, 999, 0, 999, 999, 999,
+        999, 0, 0, 0, 0, 999, 0, 0, 999, 0, 0, 0, 0, 0, 0, 999, 0, 0, 999, 999 ], [ 999, 0, 999, 0, 0, 0, 0, 0, 999,
+        999, 0, 0, 0, 0, 0, 999, 999, 999, 0, 0, 999, 999, 0, 0, 0, 999, 999, 999, 0, 0, 999, 999, 999, 0, 0, 999, 999, 999,
+        999, 0 ], [ 999, 0, 999, 999, 999, 999, 999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 999, 999, 0, 0, 0, 0, 0, 0,
+        999, 999, 0, 999, 999, 0, 0, 0, 999, 0, 0 ], [ 999, 0, 999, 0, 999, 0, 0, 0, 999, 999, 999, 999, 999, 0, 0, 0, 999,
+        999, 0, 0, 0, 0, 999, 0, 999, 999, 999, 999, 999, 999, 0, 0, 0, 0, 999, 0, 0, 0, 0, 0 ], [ 999, 0, 0, 999, 999, 0,
+        0, 0, 999, 0, 0, 0, 999, 999, 0, 0, 999, 999, 999, 999, 999, 0, 0, 999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 999, 0, 0,
+        0, 999 ], [ 999, 999, 0, 0, 999, 0, 0, 0, 999, 0, 999, 0, 0, 999, 999, 999, 999, 0, 0, 0, 999, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 999, 999, 0, 999 ], [ 0, 999, 999, 0, 999, 999, 0, 999, 999, 0, 999, 999, 0, 0, 999,
+        999, 0, 0, 0, 999, 999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 999, 0, 0 ], [ 0, 0, 999, 0, 0, 999, 999,
+        999, 0, 0, 999, 999, 999, 0, 0, 0, 0, 0, 999, 999, 0, 0, 0, 0, 0, 0, 0, 999, 999, 999, 999, 0, 0, 0, 0, 0, 0, 999,
+        0, 0 ], [ 999, 0, 999, 999, 0, 999, 0, 0, 0, 999, 999, 0, 999, 0, 0, 0, 0, 0, 999, 0, 0, 0, 0, 0, 0, 999, 999,
+        999, 0, 0, 999, 0, 0, 0, 0, 0, 0, 999, 0, 0 ], [ 999, 0, 0, 999, 0, 999, 0, 999, 999, 999, 0, 0, 0, 999, 999, 999,
+        999, 0, 999, 0, 0, 0, 999, 999, 999, 999, 0, 0, 0, 999, 999, 0, 0, 0, 0, 0, 999, 999, 0, 999 ], [ 999, 0, 0, 999, 0,
+        0, 0, 999, 999, 0, 0, 999, 999, 0, 999, 999, 999, 0, 999, 999, 999, 999, 999, 0, 0, 0, 0, 0, 0, 999, 999, 999,
+        999, 999, 999, 999, 999, 0, 0, 999 ], [ 999, 0, 0, 999, 999, 999, 999, 999, 0, 999, 999, 0, 999, 0, 0, 0, 999, 0, 0,
+        0, 0, 0, 0, 0, 999, 999, 999, 999, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 999 ]
+    ]
 
     let orig=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -163,6 +164,14 @@ export default function Main() {
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     ]
 
+    const [points,setPoints] = React.useState({start:[-1,-1], end:[-1,-1]})
+    const [ch1,setCh1] = React.useState(false)
+    const [ch2,setCh2] = React.useState(false)
+    const [down,setDown] = React.useState(false)
+    const [wlls,setWlls] = React.useState(false)
+    const [nosol,setNosol] = React.useState(false)
+    const [grid,setGrid] = React.useState(orig)
+    
     let s1=points.start[0]
     let s2=points.start[1]
     let e1=points.end[0]
@@ -269,6 +278,12 @@ export default function Main() {
     function gogo() {
         // console.log(points.start[0]+" "+points.start[1])
         let tot=dijkstra(grid,points.start[0],points.start[1])
+
+        if(tot === -1) {
+            console.log(-1)
+            return 0;
+        }
+        
         var q1=points.end[0]-1
         var q2=points.end[1]-1
 
@@ -289,7 +304,14 @@ export default function Main() {
 
         while(tmp != tar) {
             tmp=mp.get(tmp)
-            var nn=tmp.length
+            
+            try {
+                var nn=tmp.length
+            } catch(err) {
+                console.log(err)
+                alert("No Solution!!!")
+                return -1;
+            }
 
             var fin1,fin2
 
@@ -338,6 +360,8 @@ export default function Main() {
             copy[fin1][fin2]=99
             setGrid(copy)
         }
+
+        console.log(grid);
     }
 
     function clear_all() {
@@ -354,7 +378,9 @@ export default function Main() {
         setDown(false)
     }
 
-    console.log(down)
+    function randomise() {
+        setGrid(random);
+    }
 
     return (
         <div>
@@ -363,6 +389,7 @@ export default function Main() {
                 <button className="button-go" onClick={gogo}>Let's Go</button>
                 <button className="button-wall" onClick={wallie}>WALLS</button>
                 <button className="button-wall" onClick={clear_all}>Clear All</button>
+                <button className="button-wall" onClick={randomise}>Random Walls</button>
             </div>
             <table onMouseUp={() => upped()}>
                 <tbody>

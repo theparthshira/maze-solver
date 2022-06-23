@@ -6,6 +6,7 @@
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   font-weight: 600;
   font-size: 4rem;
+  margin-left: 6vw;
 }
 
 table {
@@ -18,6 +19,7 @@ table {
 .buttton-main {
   /* margin-top: -5rem; */
   display: flex;
+  margin-bottom: 5vh;
   justify-content: space-evenly;
 }
 
