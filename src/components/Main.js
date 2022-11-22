@@ -1,22 +1,21 @@
-import React, { useEffect } from "react";
+import { useState } from "react";
 import "./Main.css";
 import tables from "../data/tables.json";
-import dijkstra from "../data/dijkstra";
+import bfs from "./bfs";
 
 export default function Main() {
   let random = tables.random;
   let orig = tables.original;
 
-  const [points, setPoints] = React.useState({
+  const [points, setPoints] = useState({
     start: [-1, -1],
     end: [-1, -1],
   });
-  const [ch1, setCh1] = React.useState(false);
-  const [ch2, setCh2] = React.useState(false);
-  const [down, setDown] = React.useState(false);
-  const [walls, setwalls] = React.useState(false);
-  const [nosol, setNosol] = React.useState(false);
-  const [grid, setGrid] = React.useState(orig);
+  const [ch1, setCh1] = useState(false);
+  const [ch2, setCh2] = useState(false);
+  const [down, setDown] = useState(false);
+  const [walls, setwalls] = useState(false);
+  const [grid, setGrid] = useState(orig);
 
   let s1 = points.start[0];
   let s2 = points.start[1];
@@ -40,10 +39,6 @@ export default function Main() {
       }
     }
   }
-
-  useEffect(() => {
-    console.log(points);
-  }, [points]);
 
   function clicked(i, j) {
     setDown(true);
@@ -115,46 +110,60 @@ export default function Main() {
     }
   }
 
-  function gogo() {
-    let tot = dijkstra(grid, points);
+  async function gogo() {
+    if (points.start[0] === -1 || points.end[0] === -1) {
+      alert("Please select start and end points.");
+      return 0;
+    }
+
+    let grid_copy = [...grid];
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[i].length; j++) {
+        if (grid_copy[i][j] === 99) {
+          grid_copy[i][j] = 0;
+        }
+      }
+    }
+
+    setGrid(grid_copy);
+
+    let tot = await bfs(grid, points);
     let mp = new Map(tot.map);
 
     console.log("res -->", tot);
 
     if (tot.res === -1) {
-      console.log(-1);
       alert("No Solution!!!");
       return 0;
     }
 
-    let start;
+    let start = points.start[0] + " " + points.start[1];
+    let end = points.end[0] + " " + points.end[1];
 
-    for (const x of mp.keys()) {
-      let item = mp.get(x);
-      start = x;
-      console.log(x, "==>", item);
+    const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+
+    while (start !== end) {
+      const curr = mp.get(end);
+      if (curr === start) break;
+      const curr_points = curr.split(" ");
+      const copy = [...grid];
+      copy[curr_points[0]][curr_points[1]] = 99;
+      setGrid(copy);
+      end = curr;
+      await timer(80);
     }
-    let mtt = mp.has(start);
-    console.log("start ->", start);
-    console.log("test ->", mtt);
-    let qqqq = { x: 4, y: 4 };
-    console.log(qqqq);
-    let mt = mp.has(qqqq);
-    console.log("test ->", mt);
-
-    // let curr_point = points.end;
-
-    // while (curr_point !== points.start) {
-    //   let new_point = mp.get([curr_point[0], curr_point[1]]);
-    //   console.log("point ==>", new_point);
-    //   let copy = [...grid];
-    //   copy[new_point[0]][new_point[1]] = 99;
-    //   setGrid(copy);
-    // }
   }
 
   function clear_all() {
-    setGrid(orig);
+    let grid_copy = [...grid];
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[i].length; j++) {
+        grid_copy[i][j] = 0;
+        document.getElementById(`${i} ${j}`).className = "rd-zro";
+      }
+    }
+
+    setGrid(grid_copy);
     setPoints({ start: [-1, -1], end: [-1, -1] });
     setCh1(false);
     setCh2(false);
@@ -193,8 +202,10 @@ export default function Main() {
           return (
             <tr>
               {tables.col40.map((values, index) => {
+                const id = ind + " " + index;
                 return (
                   <td
+                    id={id}
                     className={
                       ind === s1 && index === s2
                         ? "td-one"

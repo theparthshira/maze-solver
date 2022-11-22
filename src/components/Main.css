@@ -67,3 +67,7 @@ td {
 .td-last {
   background-color: yellow;
 }
+
+.td-visited {
+  background-color: rgb(96, 96, 182);
+}
