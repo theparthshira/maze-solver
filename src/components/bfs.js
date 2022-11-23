@@ -1,4 +1,4 @@
-const bfs = async (grid, points) => {
+export default async function bfs(grid, points) {
   let mp = new Map();
   let vis = Array.from(Array(15), () => Array(40).fill(false));
   let start = points.start;
@@ -99,6 +99,4 @@ const bfs = async (grid, points) => {
   }
 
   return { map: mp, res: -1 };
-};
-
-module.exports = bfs;
+}
